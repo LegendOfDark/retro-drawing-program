@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- http://getbootstrap.com/docs/4.5/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw</title>
+</head>
+<body>
+    <h1 id="heading">Retro Drawing App</h1>
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+        <select class="form-control" name="color" id="color">
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+            <option value="gold">Gold</option>
+            <option value="pink">Pink</option>
+            <option value="blue">Blue</option>
+            <option value="black">Black</option>
+        </select>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" type="number" value="2" id="pen_thickness" name="pen_thickness" min="0" max="15">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-danger" id="erase">Erase</button>
+        </div>
+    </div>
+    <svg id="svg" style="width: 100%; height:800px;"></svg>
+    <script>
+
+        const color_div = document.querySelector('#color')
+        const size_div = document.querySelector('#pen_thickness')
+        const erase_div = document.querySelector('#erase')
+
+        let color = 'green'
+        
+        let pen_size;
+        let erase;
+
+        color_div.addEventListener('change', (e) =>{
+            color = e.target.value
+            color_div.style.backgroundColor = color;
+
+        })        
+
+        size_div.addEventListener('change', (e) =>{
+            pen_size = e.target.value
+        })        
+
+        erase_div.addEventListener('click', () => svg.selectAll('*').remove())
+        
+
+
+        const svg = d3.select('#svg')
+        let drawing_flag = false
+        let previous_coords;
+
+        function draw_point() {
+            const coords = d3.mouse(this)
+
+            if (!drawing_flag) return
+
+            svg.append('circle')
+                .attr('cx', coords[0])
+                .attr('cy', coords[1])
+                .attr('r', pen_size)
+                .style('fill', color)
+
+            svg.append('line')
+                .style("stroke", color)
+                .style("stroke-width", pen_size*2)
+                .attr('x1', previous_coords[0])
+                .attr('y1', previous_coords[1])
+                .attr('x2', coords[0])
+                .attr('y2', coords[1]);
+
+            previous_coords = coords
+            // console.log(previous_coords)
+        }
+
+
+        svg.on('mousemove', draw_point)
+
+        svg.on('mouseup', () => {
+            drawing_flag = false;
+        })
+
+        svg.on('mousedown', function(){
+            drawing_flag = true;
+            previous_coords = d3.mouse(this)
+            // console.log(d3.mouse(this))
+        })
+
+    </script>
+</body>
+</html>

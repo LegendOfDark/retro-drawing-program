@@ -1,0 +1,19 @@
+#heading{
+    text-align: center;
+    padding: .5em;
+    background-color: #007bff;
+    color: white;
+    margin-bottom: 0;
+    font-family: monospace;
+}
+
+.g-3{
+    padding: 1em 1em;
+    background-color: #0062cc;
+    font-family: monospace;
+}
+
+#color{
+    background-color: green;
+    color: white;
+}
