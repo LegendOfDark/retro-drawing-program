@@ -17,3 +17,10 @@
     background-color: green;
     color: white;
 }
+.row {
+    padding-right: 0;
+}
+
+body{
+    overflow: hidden;
+}
