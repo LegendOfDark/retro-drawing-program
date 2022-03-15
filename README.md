@@ -1,7 +1,7 @@
 # retro-drawing-program
 
-Simple drawing program similar to the Paint
+Simple drawing program similar to Paint
 
-- Made using D3.js, CSS, HTM
+- Made using D3.js, CSS, HTML
 
 Link to website: https://legendofdark.github.io/retro-drawing-program/
